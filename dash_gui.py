@@ -33,7 +33,7 @@ def get_overall_total(df):
 
 conf_overall_total = get_overall_total(covid_conf_ts)
 dead_overall_total = get_overall_total(covid_dead_ts)
-recv_overall_total = get_overall_total(covid_recv_ts)
+mort_overall_total = round((dead_overall_total/conf_overall_total)*100,5)
 
 def get_cntry_total(df,cntry='US'):
     return df[df['Country/Region']==cntry].iloc[:,-1].sum()
@@ -56,7 +56,7 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 app.title = 'Covid-19 Dashboard'    
 
 colors = {
-    'background': '#111111',
+    'background': '#F2DFCE',
     'bodyColor':'#F2DFCE',
     'text': '#7FDBFF'
 }
@@ -118,7 +118,7 @@ def get_country_dropdown(id):
                     ])
             
 def graph1():
-    return dcc.Graph(id='graph1',figure=fig_world_trend('US'))
+    return dcc.Graph(id='graph1',figure=fig_world_trend('US'),config={'modeBarButtonsToRemove': ['pan2d', 'lasso2d','toImage','toggleSpikelines','hoverClosestCartesian','hoverCompareCartesian'],'displaylogo': False})
 
 def generate_card_content(card_header,card_value,overall_value):
     card_head_style = {'textAlign':'center','fontSize':'150%'}
@@ -126,7 +126,7 @@ def generate_card_content(card_header,card_value,overall_value):
     card_header = dbc.CardHeader(card_header,style=card_head_style)
     card_body = dbc.CardBody(
         [
-            html.H5(f"{int(card_value):,}", className="card-title",style=card_body_style),
+            html.H5(f"{card_value:,}", className="card-title",style=card_body_style),
             html.P(
                 "Worlwide: {:,}".format(overall_value),
                 className="card-text",style={'textAlign':'center'}
@@ -139,14 +139,14 @@ def generate_card_content(card_header,card_value,overall_value):
 def generate_cards(cntry='US'):
     conf_cntry_total = get_cntry_total(covid_conf_ts,cntry)
     dead_cntry_total = get_cntry_total(covid_dead_ts,cntry)
-    recv_cntry_total = get_cntry_total(covid_recv_ts,cntry)
+    mort_cntry_total = round((dead_cntry_total/conf_cntry_total)*100,5) 
     cards = html.Div(
         [
             dbc.Row(
                 [
-                    dbc.Col(dbc.Card(generate_card_content("Recovered",recv_cntry_total,recv_overall_total), color="success", inverse=True),md=dict(size=2,offset=3)),
-                    dbc.Col(dbc.Card(generate_card_content("Confirmed",conf_cntry_total,conf_overall_total), color="warning", inverse=True),md=dict(size=2)),
+                    dbc.Col(dbc.Card(generate_card_content("Confirmed",conf_cntry_total,conf_overall_total), color="warning", inverse=True),md=dict(size=2,offset=3)),
                     dbc.Col(dbc.Card(generate_card_content("Dead",dead_cntry_total,dead_overall_total),color="dark", inverse=True),md=dict(size=2)),
+                    dbc.Col(dbc.Card(generate_card_content("Mortality Rate",mort_cntry_total,mort_overall_total), color="success", inverse=True),md=dict(size=2)),
                 ],
                 className="mb-4",
             ),
@@ -177,9 +177,6 @@ def generate_layout():
     page_header = generate_page_header()
     layout = dbc.Container(
         [
-            page_header[0],
-            page_header[1],
-            html.Hr(),
             generate_cards(),
             html.Hr(),
             dbc.Row(

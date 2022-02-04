@@ -1,5 +1,37 @@
 {% extends 'layout.html' %}
 
+
 {% block body %}
-  HOME
+  <div id='chart' class='chart'”></div>
+  <iframe src="http://127.0.0.2:8050/" frameborder="0" 
+  marginheight="0" 
+  marginwidth="0" 
+  width=2400 
+  height=1020
+  scrolling="auto"></iframe>
+
+<style>
+.modebar{
+      display: none !important;
+}
+
+iframe 
+{
+ display: block; 
+ width: 100%; 
+ border: none; 
+ overflow-y: auto; 
+ overflow-x: hidden;
+}
+
+body {
+background-color: #F2DFCE
+}
+
+</style>
+<!-- <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<script type='text/javascript'>
+  var graphs = {{graphJSON | safe}};
+  Plotly.plot('chart',graphs,{});
+</script> -->
 {% endblock %}

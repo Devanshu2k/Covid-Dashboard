@@ -37,13 +37,6 @@ def get_chloro():
         colorbar_title = 'Reported Covid-19 Cases'
     ))
 
+    fig.update_layout(modebar_remove=['zoom', 'pan'])
+
     return fig
-
-   # fig.update_layout(
-   ##     title_text='Reported Covid-19 Cases',
-     #   geo=dict(
-     #       showcoastlines=True,
-     #   ),
-    #)
-
-    #fig.write_html('first_figure.html', auto_open=True)
