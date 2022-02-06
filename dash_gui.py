@@ -52,6 +52,21 @@ def fig_world_trend(cntry='US',window=3):
 
 external_stylesheets = [dbc.themes.BOOTSTRAP]
 
+sidebar = html.Div(
+    [
+
+        dbc.Nav([
+                dbc.NavLink("Covid Dashboard", href="/", active="exact", className="navbar-brand" ,external_link=True),
+                dbc.NavLink("Home", href="/", active="exact" ,external_link=True),
+                dbc.NavLink("Plots", href="/plots", active="exact" ,external_link=True),
+                dbc.NavLink("Stats", href="/stats", active="exact", external_link=True),
+                dbc.NavLink("Choloropeth", href="/chloro", active="exact",external_link=True) ,
+            ],
+            className="navbar navbar-expand-md navbar-dark bg-dark mb-4"
+        ),
+    ],
+)
+
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 app.title = 'Covid-19 Dashboard'    
 
@@ -176,7 +191,7 @@ def get_slider():
 def generate_layout():
     page_header = generate_page_header()
     layout = dbc.Container(
-        [
+        [   sidebar,
             generate_cards(),
             html.Hr(),
             dbc.Row(
@@ -203,16 +218,3 @@ def generate_layout():
         ],fluid=True,style={'backgroundColor': colors['bodyColor']}
     )
     return layout
-
-app.layout = generate_layout()
-
-@app.callback(
-    [Output(component_id='graph1',component_property='figure'), #line chart
-    Output(component_id='card1',component_property='children')], #overall card numbers
-    [Input(component_id='my-id1',component_property='value'), #dropdown
-     Input(component_id='my-slider',component_property='value')] #slider
-)
-def update_output_div(input_value1,input_value2):
-    return fig_world_trend(input_value1,input_value2),generate_cards(input_value1)
-
-app.run_server(host= '127.0.0.2',debug=True)
