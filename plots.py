@@ -1,7 +1,10 @@
+import numpy as np
+import pandas as pd
 import plotly.graph_objects as go
 import plotly as pt
 import pandas as pd
 from get_date import get_date
+import matplotlib.pyplot as plt
 
 def get_chloro():
     d3 = get_date()
@@ -37,6 +40,48 @@ def get_chloro():
         colorbar_title = 'Reported Covid-19 Cases'
     ))
 
+    fig.update_layout(margin={"r":0,"t":40,"l":0,"b":0})
+
     #fig.update_layout(modebar_remove=['zoom', 'pan'])
 
     return fig
+
+def case_plot():
+    data = pd.read_csv('case_time_series.csv')
+
+    Y = data.iloc[61:,1].values
+    R = data.iloc[61:,3].values
+    D = data.iloc[61:,5].values
+    X = data.iloc[61:,0]
+    
+    fig = plt.figure(figsize=(16,10))
+    
+    ax = plt.axes()
+    ax.grid(linewidth=0.4, color='#8f8f8f')
+    
+    ax.set_facecolor("black")
+    ax.set_xlabel('\nDate',size=15,color='#4bb4f2')
+    ax.set_ylabel('Number of Confirmed Cases\n',
+                size=15,color='#4bb4f2')
+    
+    plt.xticks(rotation='vertical',size='1',color='white')
+    plt.yticks(size=1,color='white')
+    plt.tick_params(size=1,color='white')
+    
+    for i,j in zip(X,Y):
+        ax.annotate(str(j),xy=(i,j+100),color='white',size='10')
+        
+    
+    plt.title("COVID-19 IN : Daily Confirmed\n",
+            size=15,color='#28a9ff')
+    
+    ax.plot(X,Y,
+            color='#1F77B4',
+            marker='o',
+            linewidth=4,
+            markersize=10,
+            markeredgecolor='#035E9B')
+
+    return fig
+
+case_plot()

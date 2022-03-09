@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+<style>
+body {
+background-color: #F2DFCE
+}
+</style>
+
+    <h3>Severity Prediction</h3>
+ 
+<div>
+  <form enctype="multipart/form-data" action="/result" method="POST">
+    <label for="age">Age</label>
+    <input type="number" id="age" name="Age">
+    <br>
+    
+    <label for="sext">Sex</label>
+    <select id="sex" name="Sex">
+      <option value="0">Female</option>
+      <option value="1">Male</option>
+    </select>
+    <br>
+
+    <label for="platelet">Platelet</label>
+    <input type="number" id="platelet" name="Platelet">
+    <br>
+    
+    <label for="oxy">Oxygen saturation</label>
+    <input type="number" id="oxy" name="Oxygen saturation">
+    <br>
+    
+    <label for="urea">Urea</label>
+    <input type="number" id="urea" name="Urea">
+    <br>
+    
+    <label for="ct">CT</label>
+    <input type="file" id="ct" name="nii_path">
+    <br>
+
+    <input type="submit" value="Upload">
+  </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+<img src="/plot.png" >
+
+<!-- <style>
+body {
+background-color: #F2DFCE
+}
+</style>
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<script type='text/javascript'>
+  var graphs = {{graphJSON | safe}};
+  Plotly.plot('chart',graphs,{});
+</script> -->
+{% endblock %}

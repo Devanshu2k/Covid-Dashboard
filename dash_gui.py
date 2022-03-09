@@ -61,6 +61,8 @@ sidebar = html.Div(
                 dbc.NavLink("Plots", href="/plots", active="exact" ,external_link=True),
                 dbc.NavLink("Stats", href="/stats", active="exact", external_link=True),
                 dbc.NavLink("Choloropeth", href="/chloro", active="exact",external_link=True) ,
+                dbc.NavLink("Severity Prediction", href="/severity", active="exact",external_link=True) ,
+                dbc.NavLink("Support", href="/chatbot", active="exact",external_link=True) ,
             ],
             className="navbar navbar-expand-md navbar-dark bg-dark mb-4"
         ),
