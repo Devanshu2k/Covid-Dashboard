@@ -1,5 +1,5 @@
-from scancovia import ScanCovModel
-model = ScanCovModel()
+#from scancovia import ScanCovModel
+#model = ScanCovModel()
 
 import io
 import base64
