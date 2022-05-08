@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+<style>
+body {
+background-color: #F2DFCE
+}
+</style>
+
+    <h3>Covid Detection</h3>
+ 
+<div>
+  <form enctype="multipart/form-data" action="/xray_result" method="POST">
+     
+    <label for="xray">Upload X-Ray</label>
+    <input type="file" id="ct" name="xray">
+    <br>
+
+    <input type="submit" value="Upload">
+  </form>
+</div>
+
+{% endblock %}
